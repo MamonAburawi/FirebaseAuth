@@ -1,6 +1,7 @@
 package com.info.firebaseauth.authentication
 
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.info.firebaseauth.R
 import com.info.firebaseauth.databinding.LoginBinding
+import com.info.firebaseauth.databinding.ResetPassBinding
 
 class Login : Fragment() {
 
@@ -47,9 +49,23 @@ class Login : Fragment() {
             viewModel.isLogin.observe(viewLifecycleOwner) {
                 if (it != null){
                     if (it) {
-//                       viewModel.loginIsDone()
-//                        navigateToHome()
+
                     }
+                }
+            }
+
+            /** reset password error **/
+            viewModel.resetPassError.observe(viewLifecycleOwner){
+                if (!it.isNullOrBlank()){
+                    Toast.makeText(requireContext(),it,Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
+            /** is reset password success **/
+            viewModel.isResetPassSuccess.observe(viewLifecycleOwner){isSuccess ->
+                if (isSuccess != null && isSuccess){
+                    Toast.makeText(requireContext(),"Reset request has been send",Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -59,10 +75,7 @@ class Login : Fragment() {
     }
 
 
-//    fun navigateToHome() {
-//        val intent = Intent(requireContext(),MainActivity::class.java)
-//        startActivity(intent)
-//    }
+
 
     private fun setViews() {
 
@@ -70,15 +83,7 @@ class Login : Fragment() {
 
             /** login button **/
             btnLogin.setOnClickListener {
-
-                e = email.text.trim().toString()
-                p = password.text.trim().toString()
-
-                if (e.isNotBlank() && p.isNotBlank()){
-                    viewModel.signIn(e,p)
-                }else{
-                    Toast.makeText(requireContext(),"fill information", Toast.LENGTH_LONG).show()
-                }
+                signIn()
             }
 
             /** sign up button **/
@@ -86,6 +91,52 @@ class Login : Fragment() {
                 findNavController().navigate(R.id.action_login_to_registration)
             }
 
+
+            /** reset password button **/
+            btnResetPassword.setOnClickListener {
+                resetPassDialog()
+            }
+
+
+        }
+    }
+
+
+
+    private fun resetPassDialog() {
+        var alertDialog: AlertDialog? = null
+        val binding = DataBindingUtil.inflate<ResetPassBinding>(layoutInflater,R.layout.reset_pass,null,false)
+
+        val builder = AlertDialog.Builder(requireContext())
+        alertDialog = builder.setView(binding.root).show()
+
+        binding.apply {
+            /** button reset password **/
+            btnSend.setOnClickListener {
+                val e = email.text.trim().toString()
+                if (e.isNotBlank()){
+                    viewModel.resetPassword(e)
+                    alertDialog.dismiss()
+                }else{
+                    email.error = "email is required!"
+                    email.requestFocus()
+//                    Toast.makeText(requireContext(),"email is required!",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+
+    private fun signIn(){
+        binding.apply {
+            e = email.text.trim().toString()
+            p = password.text.trim().toString()
+
+            if (e.isNotBlank() && p.isNotBlank()){
+                viewModel.signIn(e,p)
+            }else{
+                Toast.makeText(requireContext(),"fill information", Toast.LENGTH_LONG).show()
+            }
         }
     }
 

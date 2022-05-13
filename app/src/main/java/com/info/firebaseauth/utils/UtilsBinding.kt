@@ -8,8 +8,8 @@ import com.info.firebaseauth.AuthActivity
 import com.info.firebaseauth.authentication.Login
 
 
-@BindingAdapter("setError")
-fun setError(tv: TextView, error: String?){
+@BindingAdapter("setAuthError")
+fun setAuthError(tv: TextView, error: String?){
     if (!error.isNullOrBlank()){
         tv.text = error
         tv.show()
@@ -18,6 +18,8 @@ fun setError(tv: TextView, error: String?){
         tv.hide()
     }
 }
+
+
 
 
 @BindingAdapter("isLoading")

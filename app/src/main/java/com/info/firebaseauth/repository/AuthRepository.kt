@@ -18,4 +18,9 @@ class AuthRepository(private val remoteAuth: RemoteAuth) {
 
     suspend fun signOut() = remoteAuth.signOut()
 
+
+    suspend fun resetPassword(email: String,
+                              onSuccess:( Task<Void>)-> Unit,
+                              onError:(String)-> Unit) = remoteAuth.resetPassword(email, onSuccess, onError)
+
 }

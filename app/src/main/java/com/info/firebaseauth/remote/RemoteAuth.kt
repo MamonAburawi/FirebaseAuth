@@ -123,6 +123,29 @@ class RemoteAuth() {
         }
     }
 
+    suspend fun resetPassword(email: String,
+                              onSuccess:( Task<Void>)-> Unit,
+                              onError:(String)-> Unit) {
+        return supervisorScope {
+            val remoteRes = async { _auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener {
+                    Log.d(TAG,"onResetPassword: Email is successfully sent")
+                    onSuccess(it)
+                }
+                .addOnFailureListener {
+                    Log.d(TAG,"onResetPassword: Failed to sent email: cause -> ${it.message}")
+                    onError(it.message.toString())
+                }
+            }
+            try {
+                remoteRes.await()
+            }catch (ex: Exception){
+                Log.d(TAG,"onResetPassword: Failed to sent email: cause -> ${ex.message}")
+            }
+        }
+    }
+
+
 
 
     companion object{
