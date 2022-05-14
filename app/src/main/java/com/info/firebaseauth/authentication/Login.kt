@@ -49,7 +49,7 @@ class Login : Fragment() {
             viewModel.isLogin.observe(viewLifecycleOwner) {
                 if (it != null){
                     if (it) {
-
+                        Toast.makeText(requireContext(),"Login Success",Toast.LENGTH_SHORT).show()
                     }
                 }
             }

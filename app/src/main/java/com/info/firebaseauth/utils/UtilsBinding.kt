@@ -1,11 +1,10 @@
 package com.info.firebaseauth.utils
 
-import android.content.Context
+
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.info.firebaseauth.AuthActivity
-import com.info.firebaseauth.authentication.Login
+
 
 
 @BindingAdapter("setAuthError")
@@ -18,7 +17,6 @@ fun setAuthError(tv: TextView, error: String?){
         tv.hide()
     }
 }
-
 
 
 
