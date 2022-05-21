@@ -6,7 +6,7 @@
 
        <variable
            name="authViewModel"
-           type="com.info.firebaseauth.authentication.AuthViewModel" />
+           type="com.info.firebaseauth.screens.authentication.AuthViewModel" />
 
     </data>
 

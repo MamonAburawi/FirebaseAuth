@@ -1,4 +1,4 @@
-package com.info.firebaseauth.authentication
+package com.info.firebaseauth.screens.authentication
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,14 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.info.firebaseauth.R
 import com.info.firebaseauth.databinding.RegistrationBinding
-import com.info.firebaseauth.utils.hide
-import com.info.firebaseauth.utils.show
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class Registration : Fragment() {
     private lateinit var binding: RegistrationBinding
 
-    private val viewModel by viewModels<AuthViewModel>()
+    private val viewModel by sharedViewModel<AuthViewModel>()
 
     private var e: String = ""
     private var p: String = ""

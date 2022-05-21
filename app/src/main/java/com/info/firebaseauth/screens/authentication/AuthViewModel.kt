@@ -1,4 +1,4 @@
-package com.info.firebaseauth.authentication
+package com.info.firebaseauth.screens.authentication
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,18 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.info.firebaseauth.data.User
-import com.info.firebaseauth.remote.RemoteAuth
 import com.info.firebaseauth.repository.AuthRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     companion object{
         const val TAG = "AuthViewModel"
     }
 
-    private val authRepository = AuthRepository(RemoteAuth())
+//    private val authRepository = AuthRepository(RemoteAuth())
 
     private var _isRegister = MutableLiveData<User?>()
     val isRegister: LiveData<User?> = _isRegister

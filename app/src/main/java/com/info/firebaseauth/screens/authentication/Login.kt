@@ -1,4 +1,4 @@
-package com.info.firebaseauth.authentication
+package com.info.firebaseauth.screens.authentication
 
 
 import android.app.AlertDialog
@@ -9,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.info.firebaseauth.R
 import com.info.firebaseauth.databinding.LoginBinding
 import com.info.firebaseauth.databinding.ResetPassBinding
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class Login : Fragment() {
 
@@ -21,7 +21,7 @@ class Login : Fragment() {
     private var e: String = ""
     private var p: String = ""
 
-    private val viewModel by viewModels<AuthViewModel>()
+    private val viewModel by sharedViewModel<AuthViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View {
@@ -41,6 +41,7 @@ class Login : Fragment() {
         binding.apply {
 
             authViewModel = viewModel
+
             lifecycleOwner = this@Login
 
 

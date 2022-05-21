@@ -1,6 +1,7 @@
 package com.info.firebaseauth
 
 import android.app.Application
+import com.info.firebaseauth.utils.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -10,11 +11,10 @@ class FirebaseApp: Application(){
         super.onCreate()
 
 
-
-//        startKoin{
-//            androidContext(this@FirebaseApp)
-//        }
-//
+        startKoin{
+            androidContext(this@FirebaseApp)
+            modules(listOf(appModule))
+        }
 
 
 

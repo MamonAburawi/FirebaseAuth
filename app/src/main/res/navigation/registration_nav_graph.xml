@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/login"
-        android:name="com.info.firebaseauth.authentication.Login"
+        android:name="com.info.firebaseauth.screens.authentication.Login"
         android:label="Login"
         tools:layout="@layout/login">
         <action
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/registration"
-        android:name="com.info.firebaseauth.authentication.Registration"
+        android:name="com.info.firebaseauth.screens.authentication.Registration"
         android:label="Registration"
         tools:layout="@layout/registration">
         <action
