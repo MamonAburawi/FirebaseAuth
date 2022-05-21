@@ -39,7 +39,7 @@ android {
 
 dependencies {
 
-//    def koin_version = "2.0.1"
+
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
@@ -68,12 +68,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
 
 
-//
-//    // koin
-//    implementation "org.koin:koin-android:$koin_version"
-//    implementation "org.koin:koin-android-scope:$koin_version"
-//    implementation "org.koin:koin-android-viewmodel:$koin_version"
-//    implementation "org.koin:koin-android-ext:$koin_version"
 
+
+    // koin
+    implementation "io.insert-koin:koin-android:3.2.0-beta-1"
+    implementation "io.insert-koin:koin-androidx-navigation:3.2.0-beta-1"
+    implementation "io.insert-koin:koin-androidx-compose:3.2.0-beta-1"
+    testImplementation "io.insert-koin:koin-test-junit4:3.2.0-beta-1"
 
 }

@@ -1,6 +1,8 @@
 package com.info.firebaseauth
 
 import android.app.Application
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class FirebaseApp: Application(){
 
@@ -8,23 +10,13 @@ class FirebaseApp: Application(){
         super.onCreate()
 
 
-        
 
-//        startKoin {
-//            androidContext(this@ShoppingApplication)
-//
-////			loadKoinModules(
-////				module(override = true){ userLiveDataModule} ,
-////			)
-//
-//            modules(listOf(
-//                productLiveDataModule,
-//                viewModelsModules,
-//                userRepositoryModule,
-//                productRepositoryModule,
-//                localDataBase,
-//            ))
+//        startKoin{
+//            androidContext(this@FirebaseApp)
 //        }
+//
+
+
 
     }
 }
