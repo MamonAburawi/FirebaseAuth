@@ -4,11 +4,11 @@ simple application to athenticate with firebase server you can athenticate by ph
 
 # before start
 
-1- enable the email auth from firebase console.
+1- Enable the email and phone auth from firebase console.
 
-2- enable the phone auth from firebase console.
+2- Copy SHA1 and SHA-256 keys from your project and paste them to the firebase console.
 
-3- add both SHA-1 and SHA-256 to firebase console which is used for phone authenticate.
+3- In the Google Cloud Console, enable the Android DeviceCheck API for your project. The default Firebase API Key will be used and needs to be allowed to access the DeviceCheck API
 
 # Features
 
