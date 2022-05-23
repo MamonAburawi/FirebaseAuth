@@ -2,7 +2,7 @@
 
 simple application to athenticate with firebase server you can athenticate by phone,email and google:
 
-# before start
+# Before start
 
 1- Enable the email and phone auth from firebase console.
 
