@@ -1,6 +1,5 @@
 package com.info.firebaseauth.screens.authentication
 
-import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -35,8 +34,9 @@ class Registration : Fragment() {
 
     private val viewModel by sharedViewModel<AuthViewModel>()
 
-    private var _emailPhone: String = ""
+    private var _email: String = ""
     private var _password: String = ""
+    private var _phone: String = ""
 
 
     lateinit var storedVerificationId:String
@@ -132,28 +132,32 @@ class Registration : Fragment() {
 
 
     private fun signUp() {
-        _emailPhone = binding.emailPhone.text.trim().toString()
+        _email = binding.email.text.trim().toString()
         _password = binding.password.text.trim().toString()
+        _phone = binding.phone.text.trim().toString()
 
-        if (_emailPhone.isNotBlank() && _password.isNotBlank()){
+
             when(viewModel.isByPhone.value){
                 true ->{
                     Log.d(TAG, "SignUp by phone")
-                    val countryCode = "+218"
-                    val number = countryCode + _emailPhone
-                    sendVerificationCode(number)
+                    if (_phone.isNotEmpty()){
+                        val countryCode = "+${binding.ccp.selectedCountryCode}"
+                        val number = countryCode + _phone
+                        sendVerificationCode(number)
+                    }
                 }
                 false ->{
-                    Log.d(TAG, "SignUp by email")
-                    viewModel.signUpByEmail(_emailPhone,_password)
+                    if (_email.isNotEmpty()){
+                        Log.d(TAG, "SignUp by email")
+                        viewModel.signUpByEmail(_email,_password)
+                    }
+
                 }
             }
-        }else{
-            Toast.makeText(requireContext(),"fill information",Toast.LENGTH_LONG).show()
-        }
+
+
+
     }
-
-
 
 
 

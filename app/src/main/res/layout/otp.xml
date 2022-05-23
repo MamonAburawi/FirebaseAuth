@@ -41,10 +41,11 @@
                 android:layout_height="50dp"/>
 
             <Button
-                android:id="@+id/btn_Send"
+                android:id="@+id/btn_Verify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Send"/>
+                android:inputType="text"
+                android:text="Verify"/>
 
 
 

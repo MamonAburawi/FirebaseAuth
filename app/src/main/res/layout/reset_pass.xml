@@ -38,7 +38,7 @@
             android:layout_height="10dp"/>
 
         <EditText
-            android:id="@+id/email_phone"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
@@ -46,7 +46,7 @@
 
 
         <Button
-            android:id="@+id/btn_Send"
+            android:id="@+id/btn_resetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

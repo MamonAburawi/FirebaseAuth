@@ -2,6 +2,7 @@ package com.info.firebaseauth.utils
 
 
 import android.text.InputType
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -33,14 +34,21 @@ fun isLoading(process: ProgressBar, isLoading: Boolean){
 }
 
 
-@BindingAdapter("switchToEd")
-fun switchToEd(ed: EditText, isByPhone: Boolean){
+@BindingAdapter("switchToED")
+fun switchToED(ed: EditText, isByPhone: Boolean){
     if (isByPhone){
-        ed.hint = "Enter your phone number"
-        ed.inputType = InputType.TYPE_CLASS_NUMBER
+        ed.hide()
     }else{
-        ed.hint = "Enter your email"
-        ed.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        ed.show()
+    }
+}
+
+@BindingAdapter("switchToPhoneLayout")
+fun switchToPhoneLayout(view: View, isByPhone: Boolean){
+    if (isByPhone){
+        view.show()
+    }else{
+        view.hide()
     }
 }
 

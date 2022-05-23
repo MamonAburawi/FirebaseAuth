@@ -22,22 +22,19 @@ class Login : Fragment() {
     }
 
     private lateinit var binding: LoginBinding
-    private var emailPhone: String = ""
-    private var p: String = ""
+    private var _email: String = ""
+    private var _phone: String = ""
+    private var _password: String = ""
 
     private val viewModel by sharedViewModel<AuthViewModel>()
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.login, container, false)
 
-
         setViews()
         setObserves()
-
 
         return binding.root
     }
@@ -69,7 +66,7 @@ class Login : Fragment() {
 
 
             /** is reset password success **/
-            viewModel.isResetPassSuccess.observe(viewLifecycleOwner){isSuccess ->
+            viewModel.isResetPassSuccess.observe(viewLifecycleOwner){ isSuccess ->
                 if (isSuccess != null && isSuccess){
                     Toast.makeText(requireContext(),"Reset request has been send",Toast.LENGTH_SHORT).show()
                 }
@@ -109,7 +106,6 @@ class Login : Fragment() {
             }
 
 
-
         }
     }
 
@@ -124,15 +120,14 @@ class Login : Fragment() {
 
         binding.apply {
             /** button reset password **/
-            btnSend.setOnClickListener {
-                val e = emailPhone.text.trim().toString()
+            btnResetPassword.setOnClickListener {
+                val e = email.text.trim().toString()
                 if (e.isNotBlank()){
                     viewModel.resetPassword(e)
                     alertDialog.dismiss()
                 }else{
-                    emailPhone.error = "email is required!"
-                    emailPhone.requestFocus()
-//                    Toast.makeText(requireContext(),"email is required!",Toast.LENGTH_SHORT).show()
+                    email.error = "email is required!"
+                    email.requestFocus()
                 }
             }
         }
@@ -141,16 +136,28 @@ class Login : Fragment() {
 
     private fun signIn(){
         binding.apply {
-            this@Login.emailPhone = emailPhone.text.trim().toString()
-            p = password.text.trim().toString()
+            _email = email.text.trim().toString()
+            _password = password.text.trim().toString()
 
-            if (this@Login.emailPhone.isNotBlank() && p.isNotBlank()){
-                viewModel.signInWithEmail(this@Login.emailPhone,p)
-            }else{
-                Toast.makeText(requireContext(),"fill information", Toast.LENGTH_LONG).show()
+            if (viewModel.isByPhone.value!!){ // sign by phone
+                if(_phone.isNotEmpty()){
+
+                }
+
+
+            }else{ // sign by email
+                if(_email.isNotEmpty()){
+                    viewModel.signInWithEmail(_email,_password)
+                }
+
             }
+
+
+
         }
     }
+
+
 
 
 }
