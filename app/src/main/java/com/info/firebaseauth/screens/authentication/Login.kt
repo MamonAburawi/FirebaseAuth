@@ -17,11 +17,17 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class Login : Fragment() {
 
+    companion object{
+        const val TAG = "Login"
+    }
+
     private lateinit var binding: LoginBinding
-    private var e: String = ""
+    private var emailPhone: String = ""
     private var p: String = ""
 
     private val viewModel by sharedViewModel<AuthViewModel>()
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View {
@@ -43,7 +49,6 @@ class Login : Fragment() {
             authViewModel = viewModel
 
             lifecycleOwner = this@Login
-
 
 
             /** login live data **/
@@ -98,6 +103,12 @@ class Login : Fragment() {
                 resetPassDialog()
             }
 
+            /** button switch **/
+            btnSwitch.setOnClickListener {
+                viewModel.switchTo()
+            }
+
+
 
         }
     }
@@ -114,13 +125,13 @@ class Login : Fragment() {
         binding.apply {
             /** button reset password **/
             btnSend.setOnClickListener {
-                val e = email.text.trim().toString()
+                val e = emailPhone.text.trim().toString()
                 if (e.isNotBlank()){
                     viewModel.resetPassword(e)
                     alertDialog.dismiss()
                 }else{
-                    email.error = "email is required!"
-                    email.requestFocus()
+                    emailPhone.error = "email is required!"
+                    emailPhone.requestFocus()
 //                    Toast.makeText(requireContext(),"email is required!",Toast.LENGTH_SHORT).show()
                 }
             }
@@ -130,11 +141,11 @@ class Login : Fragment() {
 
     private fun signIn(){
         binding.apply {
-            e = email.text.trim().toString()
+            this@Login.emailPhone = emailPhone.text.trim().toString()
             p = password.text.trim().toString()
 
-            if (e.isNotBlank() && p.isNotBlank()){
-                viewModel.signIn(e,p)
+            if (this@Login.emailPhone.isNotBlank() && p.isNotBlank()){
+                viewModel.signInWithEmail(this@Login.emailPhone,p)
             }else{
                 Toast.makeText(requireContext(),"fill information", Toast.LENGTH_LONG).show()
             }
@@ -143,3 +154,8 @@ class Login : Fragment() {
 
 
 }
+
+
+
+
+

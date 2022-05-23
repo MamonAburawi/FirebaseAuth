@@ -24,5 +24,17 @@
             android:id="@+id/action_registration_to_login"
             app:destination="@id/login"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_registration_to_OTP"
+            app:destination="@id/OTP"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/OTP"
+        android:name="com.info.firebaseauth.screens.authentication.OTP"
+        android:label="OTP"
+        tools:layout="@layout/otp">
+
+
     </fragment>
 </navigation>

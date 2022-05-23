@@ -31,10 +31,11 @@
 
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/email_phone"
                 android:layout_width="match_parent"
                 android:layout_marginTop="50dp"
                 android:layout_height="50dp"
+                switchToEd="@{authViewModel.isByPhone()}"
                 android:inputType="textEmailAddress"
                 android:hint="Enter Your Email"/>
 
@@ -83,14 +84,24 @@
                 android:textColor="@color/design_default_color_error"
                 android:textSize="15sp" />
 
+
             <Button
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_switch"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                android:text="Login"
+                android:text="By Phone"
+                android:inputType="text"
+                switchToBtn="@{authViewModel.isByPhone()}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="Login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
 
 

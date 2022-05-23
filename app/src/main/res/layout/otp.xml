@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".screens.authentication.OTP">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:text="OTP" />
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"/>
+
+            <EditText
+                android:id="@+id/otp_code"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginStart="50dp"
+                tools:hint="123456"/>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"/>
+
+            <Button
+                android:id="@+id/btn_Send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send"/>
+
+
+
+        </LinearLayout>
+
+
+
+
+    </FrameLayout>
+</layout>

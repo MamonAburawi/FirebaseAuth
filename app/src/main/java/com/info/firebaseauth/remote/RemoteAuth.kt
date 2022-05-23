@@ -1,10 +1,12 @@
 package com.info.firebaseauth.remote
 
 
+import android.app.Activity
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.info.firebaseauth.utils.Result
 import com.info.firebaseauth.data.User
@@ -14,10 +16,28 @@ import kotlinx.coroutines.supervisorScope
 @Suppress("UNREACHABLE_CODE")
 class RemoteAuth() {
 
-    private  val _auth = FirebaseAuth.getInstance()
+    val auth = FirebaseAuth.getInstance()
     private  val _rootStore = FirebaseFirestore.getInstance()
     private val usersCollection = _rootStore.collection(USERS_COLLECTION)
 
+
+    suspend fun signInWithPhoneAuthCredential(activity: Activity,
+                                              credential: PhoneAuthCredential,
+                                              onSuccess:(Task<AuthResult>)-> Unit,
+                                              onError:(String)-> Unit) {
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(activity) { task ->
+                if (task.isSuccessful) {
+                    onSuccess(task)
+                } else {
+                    // Sign in failed, display a message and update the UI
+                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        // The verification code entered was invalid
+                        onError("Invalid Otp")
+                    }
+                }
+            }
+    }
 
 
     private suspend fun signInWithEmailAndPassword(email: String,
@@ -26,7 +46,7 @@ class RemoteAuth() {
                                                     onError:(String)-> Unit) {
          return supervisorScope {
              val task = async {
-                 _auth.signInWithEmailAndPassword(email, password)
+                 auth.signInWithEmailAndPassword(email, password)
                      .addOnCompleteListener {
                          if (it.isSuccessful){
                              if (it.result.user!!.isEmailVerified){
@@ -69,7 +89,7 @@ class RemoteAuth() {
         return supervisorScope {
 
            val task = async {
-               _auth.createUserWithEmailAndPassword(user.email, user.password)
+               auth.createUserWithEmailAndPassword(user.email, user.password)
                    .addOnCompleteListener {
                    if (it.isSuccessful){
                        it.result.user?.sendEmailVerification()?.addOnCompleteListener { sendVerifyTask ->
@@ -113,7 +133,7 @@ class RemoteAuth() {
 
     suspend fun signOut(): Result<Boolean> {
         return supervisorScope {
-            val remoteRes = async { _auth.signOut() }
+            val remoteRes = async { auth.signOut() }
             try {
                 remoteRes.await()
                 Result.Success(true)
@@ -127,7 +147,7 @@ class RemoteAuth() {
                               onSuccess:( Task<Void>)-> Unit,
                               onError:(String)-> Unit) {
         return supervisorScope {
-            val remoteRes = async { _auth.sendPasswordResetEmail(email)
+            val remoteRes = async { auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener {
                     Log.d(TAG,"onResetPassword: Email is successfully sent")
                     onSuccess(it)

@@ -1,10 +1,14 @@
 package com.info.firebaseauth.screens.authentication
 
+import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.PhoneAuthCredential
 import com.info.firebaseauth.data.User
 import com.info.firebaseauth.repository.AuthRepository
 import kotlinx.coroutines.launch
@@ -16,7 +20,6 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         const val TAG = "AuthViewModel"
     }
 
-//    private val authRepository = AuthRepository(RemoteAuth())
 
     private var _isRegister = MutableLiveData<User?>()
     val isRegister: LiveData<User?> = _isRegister
@@ -36,9 +39,30 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     private var _progress = MutableLiveData<Boolean>()
     val progress: LiveData<Boolean> = _progress
 
+    private val _isByPhone = MutableLiveData<Boolean>()
+    val isByPhone: LiveData<Boolean> = _isByPhone
+
+    private val _otp = MutableLiveData<String>()
+    val otp: LiveData<String> = _otp
+
+    init {
+        _isByPhone.value = false
+    }
 
 
-    fun signUp(email: String, password: String) {
+//    fun signUpByPhone(
+//        activity: Activity,
+//        callbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks,
+//        countryCode: String,
+//        phone: String
+//    ) {
+//        viewModelScope.launch {
+//            val number = countryCode + phone
+//            authRepository.sendVerificationCode(activity, callbacks,number)
+//        }
+//    }
+
+    fun signUpByEmail(email: String, password: String) {
         _progress.value = true
         resetError()
         viewModelScope.launch {
@@ -58,12 +82,27 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         }
     }
 
+    fun signInWithPhone(activity: Activity,
+                        credential: PhoneAuthCredential) {
+        viewModelScope.launch {
+            authRepository.signInWithPhone(
+                activity,
+                credential,
+                onSuccess = {
+                    _isLogin.value = true
+                    _progress.value = false
+            },
+                onError = {
+                    resetError()
+                })
+        }
+    }
 
-    fun signIn(email: String, password: String) {
+    fun signInWithEmail(email: String, password: String) {
         _progress.value = true
         resetError()
         viewModelScope.launch {
-            authRepository.signIn(email, password,
+            authRepository.signInWithEmail(email, password,
             onSuccess = {
                 Log.d(TAG,"Login Success: ${it.result}")
                 _isLogin.value = true
@@ -75,6 +114,10 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                 resetAuth()
             })
         }
+    }
+
+    fun switchTo() {
+        _isByPhone.value = _isByPhone.value != true
     }
 
 
@@ -109,6 +152,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         _isRegister.value = null
         _isRestPassSuccess.value = false
     }
+
 
 
 
